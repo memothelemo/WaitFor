@@ -1,0 +1,36 @@
+Update 1 (March 30, 2021):
+    - Seperated between regular and promise implementation
+    - Improved coding structure
+    - Pascal case support
+        > WaitFor.childPromise() instead of WaitFor.ChildPromise()
+    - In WaitFor.childrenPromise(), instead of rejecting,
+        expect all of the required children has been not found
+        it will warn the user that any child is not yet found.
+    - WaitFor.ChildrenThenGet is now removed in favor of WaitFor.Children
+    - New Functions:
+        > WaitFor.Seconds     	- No promise implementation because of Promise.Delay
+        > WaitFor.NextStep
+        > WaitFor.Event
+    - No promise version added
+
+Update 2 (March 30 - April 4, 2021):
+    - Luau strict method is added
+    - Documentated to see how it works (kinda)
+    - WaitFor.Event is now strict (replaced with WaitFor.EventSafe)
+    - WaitFor.Child functions are now optimized!
+    - Informative and presentable error messages
+    - New Functions:
+        > WaitFor.ChildSafe
+        > WaitFor.ChildrenSafe
+        > WaitFor.Path 			- Inspired by: ChipioIndustries from his own module 'WaitForPath'
+        > WaitFor.PathSafe
+
+Update 3 (April 4, 2021 - April 11, 2021):
+    - WaitFor.Children is scanning children simultaneously
+        - For example (assume children = { "Hello", "Love", "Goodbye" })
+            for _, childName in pairs(children) do
+                spawn(function()
+                    WaitFor.Child(parent, childName)
+                end)
+            end
+    - WaitFor functions have now optional timeouts
