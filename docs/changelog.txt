@@ -26,11 +26,26 @@ Update 2 (March 30 - April 4, 2021):
         > WaitFor.PathSafe
 
 Update 3 (April 4, 2021 - April 11, 2021):
-    - WaitFor.Children is scanning children simultaneously
-        - For example (assume children = { "Hello", "Love", "Goodbye" })
-            for _, childName in pairs(children) do
-                spawn(function()
-                    WaitFor.Child(parent, childName)
-                end)
-            end
-    - WaitFor functions have now optional timeouts
+    Beta 1: 
+        - WaitFor.Children is scanning children simultaneously
+            - For example (assume children = { "Hello", "Love", "Goodbye" })
+                for _, childName in pairs(children) do
+                    spawn(function()
+                        WaitFor.Child(parent, childName)
+                    end)
+                end
+        - WaitFor functions have now optional timeouts
+        - Pascal functions are removed temporarily
+    Beta 2 (April 11, 2021 - April 29, 2021):
+        - Reworked the entire script of it
+        - Some functions are now more optimized than the last version
+        - Manual cancellation is added in Safe functions
+        - Failed to find child log are less detailed because of
+          rework
+        - Easier to implement Promise using WFPromise.lua
+        - Luau strict method is removed because of issues
+        - Pascal functions are back!
+        - Such VSCode intellisenses such as ROBLOX LSP and ROBLOX Autocompletes
+          may not work because of automatic importing Promise and WFPromise
+        - Provided rbxmx file!
+        - Improved README.md

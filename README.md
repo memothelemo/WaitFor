@@ -1,42 +1,31 @@
-<h1 align="center">WaitFor</h1>
+# WaitFor
 
-<h2 align="center">Usage</h2>
+## Usage
 
 ```lua
 local WaitFor = require(WaitFor)
 
 local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
+local character = Player.Character or Player.CharacterAdded:Wait()
 
-local healthGui = WaitFor.Path(player, "PlayerGui.HealthGui")
-local greenBar = WaitFor.Child(healthGui, "GreenBar")
+local playerGui = WaitFor.Child(player, "PlayerGui")
 
-local humanoid, rootTorso = WaitFor.Children(
-    character, 
-    {
-        'Humanoid', 
-        'HumanoidRootPart'
-    }
-)
+WaitFor.ChildrenSafePromise(character, {
+    "Humanoid",
+    "HumanoidRootPart",
+})
 ```
 
-<h2 align="center">Info</h2>
-<hr>
-A ROBLOX module where you can wait for something until it occurs, or found an Instance. It is modular (sometimes) than using WaitForChild.
+## Info
 
-Promises are also added but it can found on a seperate file. "WaitForPromise.lua"
+A ROBLOX module where you can wait for something until it occurs, or found an Instance. Modular than WaitForChild but with features that you can try. (One of them is inspired from other scripter)
 
 This module is on early stage so bugs and false errors may expected. I'm not a perfect scripter but otherwise it works.
-<br>
-<br>
 
-<h2 align="center">Docs</h2>
-<hr>
+## Docs
+
 Work in progress
 
-<br>
-<br>
+## License
 
-<h2 align="center">License</h2>
-<hr>
 This module is free software; you can redistribute it and/or modify it under the terms of the MIT license.

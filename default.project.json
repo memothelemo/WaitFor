@@ -1,14 +1,6 @@
 {
   "name": "WaitFor",
   "tree": {
-    "$className": "DataModel",
-
-    "ServerScriptService": {
-      "$className": "ServerScriptService",
-
-      "WaitFor": {
-        "$path": "dev"
-      }
-    }
+    "$path": "dev"
   }
 }
