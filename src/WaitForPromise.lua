@@ -299,6 +299,15 @@ function WaitFor.ChildrenPromise(parent: Instance, children)
 	AssertFunction('Children', parent, children)
 
 	return Promise.new(function(resolve, reject)
+            local childrenPromises = {}
+            for _, childName in ipairs(children) do
+                local candidate = WaitFor.ChildPromise(parent, childName)
+                table.insert(childrenPromises, candidate)
+            end
+            resolve(Promise.all(childrenPromises))
+        end)
+
+        return Promise.new(function(resolve, reject)
 		local bindable = Instance.new('BindableEvent')
 		local scannedChildren = 0
 		local childrenInQueue = {}
