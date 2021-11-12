@@ -198,6 +198,8 @@ function WaitFor.ChildSafePromise(parent: Instance, name: string)
 				end	
 			end)
 		end
+
+		resolve(child)
 	end)
 end
 WaitFor.childSafePromise = WaitFor.ChildSafePromise
@@ -298,46 +300,13 @@ WaitFor.children = WaitFor.Children
 function WaitFor.ChildrenPromise(parent: Instance, children)
 	AssertFunction('Children', parent, children)
 
-	return Promise.new(function(resolve, reject)
-            local childrenPromises = {}
-            for _, childName in ipairs(children) do
-                local candidate = WaitFor.ChildPromise(parent, childName)
-                table.insert(childrenPromises, candidate)
-            end
-            resolve(Promise.all(childrenPromises))
-        end)
+	local childrenPromises = {}
+	for _, childName in ipairs(children) do
+		local candidate = WaitFor.ChildPromise(parent, childName)
+		table.insert(childrenPromises, candidate)
+	end
 
-        return Promise.new(function(resolve, reject)
-		local bindable = Instance.new('BindableEvent')
-		local scannedChildren = 0
-		local childrenInQueue = {}
-
-		for index, childName in pairs(children) do
-			WaitFor.ChildPromise(parent, childName):Then(function(child)
-				childrenInQueue[index] = child
-			end):Catch(function(promiseError)
-				warn(TIMEOUT_CHILDREN_ERROR:format(childName, parent.Name))
-				childrenInQueue[index] = nil
-			end):Finally(function()
-				scannedChildren += 1
-				bindable:Fire()
-			end)
-		end    
-
-		local connection = nil
-		connection = bindable.Event:Connect(function()
-			if (#childrenInQueue == #children or scannedChildren == #children) then
-				connection:Disconnect()
-
-				local emptyTable = (childrenInQueue == {})
-				if emptyTable then
-					return reject(WAITFOR_CHILDREN_FAILED:format(parent.Name))
-				else
-					return resolve(unpack(childrenInQueue))
-				end
-			end
-		end)
-	end)
+	return Promise.all(childrenPromises)
 end
 WaitFor.childrenPromise = WaitFor.ChildrenPromise
 
